@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Website: add a copy button for the Homebrew install command.
 - Claude Code: add optional prompt-decoration flattening for copied slash commands while preserving ordinary wrapped prose (#19, thanks @evoleinik).
 - Settings: add an option to hide the menu bar icon while keeping Trimmy running (#24, thanks @qazi0).
 - Text cleanup: dedent copied prose where most paragraph lines share the same leading whitespace (#10, thanks @arunsathiya).

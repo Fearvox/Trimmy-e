@@ -33,7 +33,7 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./site.css?v=20260510a" />
+    <link rel="stylesheet" href="./site.css?v=20260511a" />
   </head>
   <body>
     <div class="grain" aria-hidden="true"></div>
@@ -71,7 +71,15 @@
               <span aria-hidden="true">↓</span>&nbsp;Download Trimmy <span class="dim">·&nbsp;0.8.0</span>
             </a>
             <a class="btn paper-btn" href="https://github.com/steipete/Trimmy">View source on GitHub</a>
-            <span class="brew">or <code>brew install --cask steipete/tap/trimmy</code></span>
+            <span class="brew">
+              or
+              <span class="brew-command">
+                <code id="brew-install-command">brew install --cask steipete/tap/trimmy</code>
+                <button class="copy-brew" type="button" data-copy-target="brew-install-command">
+                  Copy
+                </button>
+              </span>
+            </span>
           </div>
 
           <aside class="hero-note">
@@ -267,5 +275,41 @@
         </p>
       </footer>
     </main>
+
+    <script>
+      const copyButton = document.querySelector("[data-copy-target]");
+
+      copyButton?.addEventListener("click", async () => {
+        const target = document.getElementById(copyButton.dataset.copyTarget);
+        const text = target?.textContent?.trim();
+        if (!text) return;
+
+        const setLabel = (label) => {
+          copyButton.textContent = label;
+        };
+
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const input = document.createElement("textarea");
+            input.value = text;
+            input.setAttribute("readonly", "");
+            input.style.position = "fixed";
+            input.style.opacity = "0";
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand("copy");
+            input.remove();
+          }
+
+          setLabel("Copied");
+          window.setTimeout(() => setLabel("Copy"), 1400);
+        } catch {
+          setLabel("Error");
+          window.setTimeout(() => setLabel("Copy"), 1400);
+        }
+      });
+    </script>
   </body>
 </html>

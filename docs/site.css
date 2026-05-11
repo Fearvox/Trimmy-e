@@ -215,11 +215,52 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   color: var(--ink-soft);
   margin-left: 4px;
 }
+.brew-command {
+  display: inline-flex;
+  align-items: stretch;
+  max-width: 100%;
+  vertical-align: middle;
+}
 .brew code {
   background: var(--paper-shade);
   padding: 3px 7px;
   border-radius: 2px;
   border: 1px solid var(--rule-soft);
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.copy-brew {
+  appearance: none;
+  border: 1px solid var(--ink);
+  border-radius: 0 2px 2px 0;
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  text-transform: uppercase;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+.copy-brew:hover {
+  background: var(--cut);
+}
+.copy-brew:active {
+  transform: translateY(1px);
+}
+.copy-brew:focus-visible {
+  outline: 2px solid var(--cut);
+  outline-offset: 2px;
 }
 
 /* section heads */
@@ -593,6 +634,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .man { padding: 22px 18px; font-size: 12px; }
   .man::before { font-size: 9px; }
   .brew { width: 100%; margin-left: 0; }
+  .brew-command { display: flex; margin-top: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

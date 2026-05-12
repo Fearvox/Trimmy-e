@@ -67,6 +67,10 @@ struct MenuContentView: View {
         _ = self.monitor.pasteReformattedMarkdown()
     }
 
+    private func handlePasteStrippingURLQueryParams() {
+        _ = self.monitor.pasteStrippingURLQueryParams()
+    }
+
     private var targetAppLabel: String {
         ClipboardMonitor.ellipsize(self.monitor.frontmostAppName, limit: 30)
     }
@@ -154,15 +158,30 @@ extension MenuContentView {
             if self.settings.showMarkdownReformatOption,
                let markdownPreviewSource = self.markdownPreviewSource
             {
-                let markdownStatsSuffix = self.statsSuffix(for: markdownPreviewSource, showTruncations: true)
+                let markdownStatsSuffix = self.statsSuffix(for: markdownPreviewSource)
                 Button("Paste Reformatted Markdown to \(self.targetAppLabel)\(markdownStatsSuffix)") {
                     self.handlePasteReformattedMarkdown()
                 }
-                Text(self.markdownPreviewLine(for: markdownPreviewSource))
+                Text(self.previewLine(for: markdownPreviewSource))
                     .font(.caption2).monospaced()
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
+                    .truncationMode(.middle)
+                    .frame(maxWidth: 260, alignment: .leading)
+            }
+
+            if self.settings.showURLQueryParamStripOption,
+               let strippedURLPreviewSource = self.strippedURLPreviewSource
+            {
+                let strippedStatsSuffix = self.statsSuffix(for: strippedURLPreviewSource)
+                Button("Paste without Query Params to \(self.targetAppLabel)\(strippedStatsSuffix)") {
+                    self.handlePasteStrippingURLQueryParams()
+                }
+                Text(self.previewLine(for: strippedURLPreviewSource))
+                    .font(.caption2).monospaced()
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
                     .truncationMode(.middle)
                     .frame(maxWidth: 260, alignment: .leading)
             }
@@ -198,38 +217,27 @@ extension MenuContentView {
     }
 
     private var trimmedStatsSuffix: String {
-        guard let trimmed = self.monitor.trimmedPreviewSource() else { return "" }
-        let base = PreviewMetrics.prettyBadge(
-            count: trimmed.count,
-            limit: MenuPreview.limit,
-            showTruncations: true)
-        if let original = self.monitor.originalPreviewSource(),
-           original.count > trimmed.count
-        {
-            let removed = original.count - trimmed.count
-            return "\(base) · \(removed) trimmed"
-        }
-        return base
+        self.statsSuffix(for: self.monitor.trimmedPreviewSource())
     }
 
     private var originalStatsSuffix: String {
-        // Show length for the original, but don’t report “trimmed” counts since it is the unmodified text.
-        self.statsSuffix(for: self.monitor.originalPreviewSource(), showTruncations: false)
+        self.statsSuffix(for: self.monitor.originalPreviewSource())
     }
 
-    private func statsSuffix(for text: String?, showTruncations: Bool) -> String {
+    private func statsSuffix(for text: String?) -> String {
         guard let text else { return "" }
-        return PreviewMetrics.prettyBadge(
-            count: text.count,
-            limit: MenuPreview.limit,
-            showTruncations: showTruncations)
+        return PreviewMetrics.prettyBadge(count: text.count)
     }
 
     private var markdownPreviewSource: String? {
         self.monitor.markdownReformatPreviewSource()
     }
 
-    private func markdownPreviewLine(for text: String) -> String {
+    private var strippedURLPreviewSource: String? {
+        self.monitor.urlQueryParamStripPreviewSource()
+    }
+
+    private func previewLine(for text: String) -> String {
         ClipboardMonitor.ellipsize(PreviewMetrics.displayString(text), limit: MenuPreview.limit)
     }
 }

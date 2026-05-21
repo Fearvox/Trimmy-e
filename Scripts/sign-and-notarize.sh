@@ -7,27 +7,13 @@ APP_BUNDLE="Trimmy.app"
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 APP_ENTITLEMENTS="$ROOT/Trimmy.entitlements"
 source "$ROOT/version.env"
-ZIP_NAME="Trimmy-0.9.0.zip"
+ZIP_NAME="Trimmy-${MARKETING_VERSION}.zip"
 DSYM_ZIP="Trimmy-${MARKETING_VERSION}.dSYM.zip"
 
 if [[ -z "${APP_STORE_CONNECT_API_KEY_P8:-}" || -z "${APP_STORE_CONNECT_KEY_ID:-}" || -z "${APP_STORE_CONNECT_ISSUER_ID:-}" ]]; then
   echo "Missing APP_STORE_CONNECT_* env vars (API key, key id, issuer id)." >&2
   exit 1
 fi
-if [[ -z "${SPARKLE_PRIVATE_KEY_FILE:-}" ]]; then
-  echo "SPARKLE_PRIVATE_KEY_FILE is required for release signing/verification." >&2
-  exit 1
-fi
-if [[ ! -f "$SPARKLE_PRIVATE_KEY_FILE" ]]; then
-  echo "Sparkle key file not found: $SPARKLE_PRIVATE_KEY_FILE" >&2
-  exit 1
-fi
-key_lines=$(grep -v '^[[:space:]]*#' "$SPARKLE_PRIVATE_KEY_FILE" | sed '/^[[:space:]]*$/d')
-if [[ $(printf "%s\n" "$key_lines" | wc -l) -ne 1 ]]; then
-  echo "Sparkle key file must contain exactly one base64 line (no comments/blank lines)." >&2
-  exit 1
-fi
-
 echo "$APP_STORE_CONNECT_API_KEY_P8" | sed 's/\\n/\n/g' > /tmp/trimmy-api-key.p8
 trap 'rm -f /tmp/trimmy-api-key.p8 /tmp/TrimmyNotarize.zip' EXIT
 

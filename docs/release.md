@@ -17,17 +17,18 @@ SwiftPM only; manual package/sign/notarize. Sparkle feed served from GitHub Rele
 
 ### Release automation notes (Scripts/release.sh)
 - Always forces a fresh rebuild/notarization (no cached artifacts) to avoid stale Swift outputs.
-- Fails fast if: working tree is dirty, changelog top section is still “Unreleased”, target version already exists in appcast, or build number is not greater than the latest appcast build.
+- Fails fast if: Xcode Info.plists are stale vs `version.env`, working tree is dirty, changelog top section is still “Unreleased”, target version already exists in appcast, or build number is not greater than the latest appcast build.
 - Extracts release notes directly from the current changelog section and uses them for the GitHub release (no manual notes flag needed).
 - Sparkle appcast notes are generated as HTML from the same changelog section and embedded into the appcast entry.
 - Preflight Sparkle key sanity check; verifies signature, spctl, and codesign locally, and HEAD checks remote zip/dSYM; runs `Scripts/check-release-assets.sh v<ver>` after upload.
-- Requires `python3`, `sign_update`, `generate_appcast`, `swiftlint`, `swift`, `gh`, `zip`, `curl` in PATH plus `APP_STORE_CONNECT_*` and `SPARKLE_PRIVATE_KEY_FILE` env vars.
+- Requires `python3`, `sign_update`, `generate_keys`, `generate_appcast`, `swiftlint`, `swift`, `gh`, `zip`, `curl` in PATH plus `APP_STORE_CONNECT_*`. `SPARKLE_PRIVATE_KEY_FILE` is only needed when overriding the default Keychain Sparkle key.
 
 ## Prereqs
 - Xcode 26+ installed at `/Applications/Xcode.app` (for ictool/iconutil and SDKs).
 - Developer ID Application cert installed: `Developer ID Application: Peter Steinberger (Y5PE65HELJ)`.
 - ASC API creds in env: `APP_STORE_CONNECT_API_KEY_P8`, `APP_STORE_CONNECT_KEY_ID`, `APP_STORE_CONNECT_ISSUER_ID`.
-- Sparkle keys: public key already in Info.plist; private key lives at `/Users/steipete/Library/CloudStorage/Dropbox/Backup/Sparkle` and its path is passed via `SPARKLE_PRIVATE_KEY_FILE` when generating the appcast.
+- Sparkle keys: public key expectation lives in `.mac-release.env`; Trimmy still uses the older shared AGCY key, so the manifest includes the local Dropbox fallback path. `SPARKLE_PRIVATE_KEY_FILE` overrides it.
+- Shared release helper: `Scripts/mac-release` resolves `MAC_RELEASE_TOOL`, sibling `../agent-scripts`, or `~/Projects/agent-scripts`.
 - Sparkle auto-checks are **enabled by default** for release builds (set in `package_app.sh`); leave this on so update checks run without user toggles.
 
 ## Icon
@@ -56,9 +57,8 @@ Gotchas fixed:
 - Manual sanity check before upload: `find Trimmy.app -name '._*'` should return nothing, then `spctl --assess --type execute --verbose Trimmy.app` and `codesign --verify --deep --strict --verbose Trimmy.app` should pass on the packaged bundle.
 
 ## Appcast (Sparkle)
-After notarization:
+After notarization, or let `Scripts/release.sh` do this:
 ```
-SPARKLE_PRIVATE_KEY_FILE=/path/to/ed25519-priv.key \
 ./Scripts/make_appcast.sh Trimmy-<ver>.zip \
   https://raw.githubusercontent.com/steipete/Trimmy/main/appcast.xml
 ```
@@ -67,10 +67,7 @@ Uploads not handled automatically—commit/publish appcast + zip to the feed loc
 
 ## Tag & release
 ```
-git tag v0.2.2
-./Scripts/make_appcast.sh ...
-# upload zip + appcast to Releases
-# then create GitHub release (gh release create v0.1.1 ...)
+./Scripts/release.sh
 ```
 
 ## Checklist (quick)
@@ -80,7 +77,7 @@ git tag v0.2.2
 - [ ] Confirm CI is green for the release commit (`gh run list/view`; rerun/fix until green).
 - [ ] `./Scripts/build_icon.sh` if icon changed
 - [ ] `./Scripts/sign-and-notarize.sh`
-- [ ] Generate Sparkle appcast with private key
+- [ ] Generate Sparkle appcast via `Scripts/release.sh` or `Scripts/make_appcast.sh`; use `SPARKLE_PRIVATE_KEY_FILE` only if overriding Keychain signing.
 - [ ] Upload zip + appcast **and the Trimmy-<ver>.dSYM.zip** to the GitHub release; publish release/tag
   - Run `Scripts/check-release-assets.sh <tag>` after publishing to ensure both zip and dSYM are attached.
 - [ ] Version continuity: confirm the new version is the immediate next patch/minor (no gaps) and CHANGELOG has no skipped numbers (e.g., after 0.2.0 use 0.2.1, not 0.2.2)

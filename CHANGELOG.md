@@ -1,10 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.10.0 — 2026-06-11
 - Auto-trim can now be disabled for configured apps and browser sites while keeping manual paste actions available (#15).
-- Menu: add an optional “Paste without Query Params” action for copied URLs,
-  gated by Settings → General and preserving configured content-identity
-  parameters (#27, thanks @danfooo).
+- Menu: add an optional “Paste without Query Params” action for copied URLs, gated by Settings → General and preserving configured content-identity parameters (#27, thanks @danfooo).
+- Menu paste-action badges now show a single clear character count instead of duplicate “trimmed” counters (#27, thanks @danfooo).
 
 ## 0.9.0 — 2026-05-11
 - Claude Code: add optional prompt-decoration flattening for copied slash commands while preserving ordinary wrapped prose (#19, thanks @evoleinik).

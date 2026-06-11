@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.10.1 — Unreleased
+## 0.10.1 — 2026-06-11
 - Settings: reorganize controls into focused General, Trimming, Rules, Shortcuts, Advanced, and About tabs, with low-frequency cleanup options under Advanced and a compact native macOS layout.
 
 ## 0.10.0 — 2026-06-11

@@ -2,6 +2,21 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <item>
+            <title>0.10.1</title>
+            <pubDate>Thu, 11 Jun 2026 09:50:47 +0100</pubDate>
+            <link>https://raw.githubusercontent.com/steipete/Trimmy/main/appcast.xml</link>
+            <sparkle:version>31</sparkle:version>
+            <sparkle:shortVersionString>0.10.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<h2>Trimmy 0.10.1</h2>
+<ul>
+<li>Settings: reorganize controls into focused General, Trimming, Rules, Shortcuts, Advanced, and About tabs, with low-frequency cleanup options under Advanced and a compact native macOS layout.</li>
+</ul>
+<p><a href="https://github.com/steipete/Trimmy/blob/main/CHANGELOG.md">View full changelog</a></p>
+]]></description>
+            <enclosure url="https://github.com/steipete/Trimmy/releases/download/v0.10.1/Trimmy-0.10.1.zip" length="2687415" type="application/octet-stream" sparkle:edSignature="SfG1mbQVjDbLr/pEMTKBWhgbVOT2YcWLDqdlDutIfRENpWZe0XRJ/Al2jBSC74pwP4IG8f5l6Iju6zA/TTdnAA=="/>
+        </item>
+        <item>
             <title>0.10.0</title>
             <pubDate>Thu, 11 Jun 2026 08:22:07 +0100</pubDate>
             <link>https://raw.githubusercontent.com/steipete/Trimmy/main/appcast.xml</link>
@@ -35,22 +50,6 @@
 <p><a href="https://github.com/steipete/Trimmy/blob/main/CHANGELOG.md">View full changelog</a></p>
 ]]></description>
             <enclosure url="https://github.com/steipete/Trimmy/releases/download/v0.9.0/Trimmy-0.9.0.zip" length="2630308" type="application/octet-stream" sparkle:edSignature="2aCjCUymQxStjqJcjeIs0LcYjRZGTLA4I2UaTTfIKXscC7TDLkQPBG1t80Qzfpna+0npJMS/OS8Uw2XnxFFQBQ=="/>
-        </item>
-        <item>
-            <title>0.8.0</title>
-            <pubDate>Mon, 19 Jan 2026 08:31:41 +0000</pubDate>
-            <link>https://raw.githubusercontent.com/steipete/Trimmy/main/appcast.xml</link>
-            <sparkle:version>28</sparkle:version>
-            <sparkle:shortVersionString>0.8.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<h2>Trimmy 0.8.0</h2>
-<ul>
-<li>Added a menu-only “Paste Reformatted Markdown” action to join wrapped markdown paragraphs and bullet lists while preserving blank lines and fenced code blocks.</li>
-<li>Path quoting now only wraps standalone paths (not commands or sentences) when they contain spaces (#17, thanks @n0an).</li>
-</ul>
-<p><a href="https://github.com/steipete/Trimmy/blob/main/CHANGELOG.md">View full changelog</a></p>
-]]></description>
-            <enclosure url="https://github.com/steipete/Trimmy/releases/download/v0.8.0/Trimmy-0.8.0.zip" length="2614209" type="application/octet-stream" sparkle:edSignature="IhZI64vmnT/SV7m3byb3r5rO9xYMxStwuGFS10r+2XjMpvbJrXy8dHj3Ete56b8ynGDz59312IpzFb3vhTXJCw=="/>
         </item>
         <title>Trimmy</title>
     </channel>

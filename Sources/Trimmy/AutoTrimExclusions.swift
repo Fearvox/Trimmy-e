@@ -101,8 +101,11 @@ extension AppSettings {
         !AutoTrimExclusionMatcher.tokens(from: self.autoTrimExcludedSites).isEmpty
     }
 
-    func excludesAutoTrim(sourceContext: ClipboardSourceContext, host: String?) -> Bool {
+    func excludesAutoTrimApp(sourceContext: ClipboardSourceContext) -> Bool {
         AutoTrimExclusionMatcher.matchesApp(sourceContext, patterns: self.autoTrimExcludedApps)
-            || AutoTrimExclusionMatcher.matchesSite(host: host, patterns: self.autoTrimExcludedSites)
+    }
+
+    func excludesAutoTrimSite(host: String?) -> Bool {
+        AutoTrimExclusionMatcher.matchesSite(host: host, patterns: self.autoTrimExcludedSites)
     }
 }

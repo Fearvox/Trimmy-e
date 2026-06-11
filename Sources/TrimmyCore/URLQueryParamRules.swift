@@ -69,8 +69,10 @@ public enum URLQueryParamRules {
     /// Returns the set of params to keep for a given host.
     /// Matching is done on host suffix so `youtube.com` catches `www.youtube.com`.
     public static func keepParams(for host: String, customRules: [URLQueryParamRule]) -> Set<String> {
+        let normalizedHost = host.lowercased()
         guard let match = customRules.first(where: {
-            host == $0.domain || host.hasSuffix(".\($0.domain)")
+            let domain = $0.domain.lowercased()
+            return normalizedHost == domain || normalizedHost.hasSuffix(".\(domain)")
         }) else { return [] }
         return match.keepParams
     }

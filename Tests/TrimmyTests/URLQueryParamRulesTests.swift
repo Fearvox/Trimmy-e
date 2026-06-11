@@ -78,6 +78,12 @@ struct URLQueryParamRulesTests {
     }
 
     @Test
+    func `host matching is case insensitive`() {
+        let keeping = URLQueryParamRules.keepParams(for: "WWW.YouTube.COM", customRules: Self.defaultRules)
+        #expect(keeping == ["v", "list", "t"])
+    }
+
+    @Test
     func `default rules include youtu be`() {
         let keeping = URLQueryParamRules.keepParams(for: "youtu.be", customRules: Self.defaultRules)
         #expect(keeping == ["t"])

@@ -251,16 +251,18 @@ final class ClipboardMonitor: ObservableObject {
     }
 
     private func shouldSkipAutoTrim(for sourceContext: ClipboardSourceContext) -> Bool {
-        let host = self.settings.hasAutoTrimSiteExclusions
-            ? self.browserLocationProvider.currentHost(for: sourceContext)
-            : nil
-        guard self.settings.excludesAutoTrim(sourceContext: sourceContext, host: host) else {
-            return false
+        let sourceName: String
+        if self.settings.excludesAutoTrimApp(sourceContext: sourceContext) {
+            sourceName = sourceContext.appName ?? sourceContext.bundleIdentifier ?? "this app"
+        } else {
+            guard self.settings.hasAutoTrimSiteExclusions else { return false }
+            let host = self.browserLocationProvider.currentHost(for: sourceContext)
+            guard self.settings.excludesAutoTrimSite(host: host) else { return false }
+            sourceName = host ?? sourceContext.appName ?? sourceContext.bundleIdentifier ?? "this site"
         }
 
         let currentText = self.readTextFromPasteboard(ignoreMarker: false)
         self.cache(original: currentText, trimmed: nil)
-        let sourceName = host ?? sourceContext.appName ?? sourceContext.bundleIdentifier ?? "this app"
         self.lastSummary = "Auto-trim skipped for \(sourceName)."
         return true
     }

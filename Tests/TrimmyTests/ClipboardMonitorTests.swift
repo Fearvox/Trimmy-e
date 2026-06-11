@@ -14,11 +14,17 @@ struct ClipboardMonitorTests {
         }
     }
 
-    private struct StubBrowserLocationProvider: BrowserLocationProviding {
+    private final class StubBrowserLocationProvider: BrowserLocationProviding {
         let host: String?
+        private(set) var callCount = 0
 
         func currentHost(for _: ClipboardSourceContext) -> String? {
-            self.host
+            self.callCount += 1
+            return self.host
+        }
+
+        init(host: String?) {
+            self.host = host
         }
     }
 
@@ -117,6 +123,41 @@ struct ClipboardMonitorTests {
         #expect(didTrim == false)
         #expect(pasteboard.string(forType: .string)?.contains(where: \.isNewline) == true)
         #expect(monitor.lastSummary.contains("Auto-trim skipped"))
+    }
+
+    @Test
+    func `app exclusion skips browser location lookup`() {
+        let settings = AppSettings()
+        settings.autoTrimEnabled = true
+        settings.autoTrimExcludedApps = "Google Chrome"
+        settings.autoTrimExcludedSites = "example.com"
+        defer {
+            settings.autoTrimExcludedApps = ""
+            settings.autoTrimExcludedSites = ""
+        }
+        let pasteboard = makeTestPasteboard()
+        let browserLocationProvider = StubBrowserLocationProvider(host: "example.com")
+        let monitor = ClipboardMonitor(
+            settings: settings,
+            pasteboard: pasteboard,
+            accessibilityPermission: StubAccessibilityPermission(),
+            browserLocationProvider: browserLocationProvider)
+        let sourceContext = ClipboardSourceContext(
+            timestamp: Date(),
+            capture: .eventTap,
+            bundleIdentifier: "com.google.Chrome",
+            appName: "Google Chrome",
+            processIdentifier: nil)
+
+        pasteboard.setString(
+            """
+            echo hi \\
+            ls -la
+            """,
+            forType: .string)
+
+        #expect(monitor.trimClipboardIfNeeded(force: false, sourceContext: sourceContext) == false)
+        #expect(browserLocationProvider.callCount == 0)
     }
 
     @Test

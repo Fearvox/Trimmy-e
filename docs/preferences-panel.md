@@ -11,10 +11,10 @@ Goal: ship a real macOS Settings window (⌘,) using only SwiftUI—no custom Ap
 
 ## Current Trimmy organization
 - **General**: auto-trim, optional menu actions, launch and menu-bar behavior.
-- **Trimming**: regular-app and terminal sensitivity, cleanup options, live preview.
+- **Trimming**: regular-app and terminal sensitivity, live preview.
 - **Rules**: app/site auto-trim exclusions and preserved URL query parameters.
 - **Shortcuts**: global paste and auto-trim shortcuts.
-- **Advanced**: clipboard compatibility, CLI installer, development tools.
+- **Advanced**: low-frequency text cleanup, clipboard compatibility, CLI installer, development tools.
 - **About**: version, links, license, and update controls.
 
 Use `SettingsPaneLayout`, `SettingsSection`, and `SettingsTextEditor` for new controls so spacing, scrolling, and editor treatment remain consistent. Keep sections flat and native; do not add custom card backgrounds.

@@ -1,7 +1,7 @@
 # Changelog
 
 ## 0.10.1 — Unreleased
-- Settings: reorganize controls into focused General, Trimming, Rules, Shortcuts, Advanced, and About tabs while retaining a compact native macOS layout.
+- Settings: reorganize controls into focused General, Trimming, Rules, Shortcuts, Advanced, and About tabs, with low-frequency cleanup options under Advanced and a compact native macOS layout.
 
 ## 0.10.0 — 2026-06-11
 - Auto-trim can now be disabled for configured apps and browser sites while keeping manual paste actions available (#15).

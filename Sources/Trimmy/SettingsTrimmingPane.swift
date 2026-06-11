@@ -50,34 +50,9 @@ struct TrimmingSettingsPane: View {
             }
 
             SettingsSection(
-                "Cleanup",
-                subtitle: "Fine-tune what Trimmy removes while preparing clipboard text.")
-            {
-                VStack(alignment: .leading, spacing: 16) {
-                    PreferenceToggleRow(
-                        title: "Keep blank lines",
-                        subtitle: "Preserve intentional paragraph breaks instead of collapsing them.",
-                        binding: self.$settings.preserveBlankLines)
-
-                    Divider()
-
-                    PreferenceToggleRow(
-                        title: "Remove box-drawing gutters",
-                        subtitle: "Strip prompt-style │ and ┃ characters before trimming.",
-                        binding: self.$settings.removeBoxDrawing)
-
-                    Divider()
-
-                    PreferenceToggleRow(
-                        title: "Flatten Claude Code prompts",
-                        subtitle: "Remove ❯ and ─── decoration and join wrapped Claude Code prompts.",
-                        binding: self.$settings.flattenClaudeCodePrompts)
-                }
-            }
-
-            SettingsSection(
                 "Preview",
-                subtitle: "Manual “Paste Trimmed” always uses High; this preview follows the General apps level.")
+                subtitle: "Follows the General apps level and the text cleanup options in Advanced. "
+                    + "Manual “Paste Trimmed” always uses High.")
             {
                 AggressivenessPreview(
                     level: self.settings.generalAggressiveness,

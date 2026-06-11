@@ -9,6 +9,32 @@ struct AdvancedSettingsPane: View {
     var body: some View {
         SettingsPaneLayout {
             SettingsSection(
+                "Text cleanup",
+                subtitle: "Fine-tune what Trimmy removes while preparing clipboard text.")
+            {
+                VStack(alignment: .leading, spacing: 16) {
+                    PreferenceToggleRow(
+                        title: "Keep blank lines",
+                        subtitle: "Preserve intentional paragraph breaks instead of collapsing them.",
+                        binding: self.$settings.preserveBlankLines)
+
+                    Divider()
+
+                    PreferenceToggleRow(
+                        title: "Remove box-drawing gutters",
+                        subtitle: "Strip prompt-style │ and ┃ characters before trimming.",
+                        binding: self.$settings.removeBoxDrawing)
+
+                    Divider()
+
+                    PreferenceToggleRow(
+                        title: "Flatten Claude Code prompts",
+                        subtitle: "Remove ❯ and ─── decoration and join wrapped Claude Code prompts.",
+                        binding: self.$settings.flattenClaudeCodePrompts)
+                }
+            }
+
+            SettingsSection(
                 "Clipboard compatibility",
                 subtitle: "Optional compatibility behavior for apps that publish unusual clipboard formats.")
             {

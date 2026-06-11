@@ -6,12 +6,12 @@ struct SettingsPaneLayout<Content: View>: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 24) {
                 self.content
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 24)
-            .padding(.vertical, 20)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 16)
         }
     }
 }
@@ -19,31 +19,23 @@ struct SettingsPaneLayout<Content: View>: View {
 @MainActor
 struct SettingsSection<Content: View>: View {
     let title: String
-    let systemImage: String
     let subtitle: String?
     let content: Content
 
     init(
         _ title: String,
-        systemImage: String,
         subtitle: String? = nil,
         @ViewBuilder content: () -> Content)
     {
         self.title = title
-        self.systemImage = systemImage
         self.subtitle = subtitle
         self.content = content()
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
-                Image(systemName: self.systemImage)
-                    .foregroundStyle(.secondary)
-                    .frame(width: 18)
-                Text(self.title)
-                    .font(.headline)
-            }
+            Text(self.title)
+                .font(.headline)
 
             if let subtitle {
                 Text(subtitle)
@@ -55,13 +47,6 @@ struct SettingsSection<Content: View>: View {
             self.content
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .background(Color(nsColor: .controlBackgroundColor))
-        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .stroke(Color.secondary.opacity(0.16), lineWidth: 1)
-        }
     }
 }
 
@@ -107,14 +92,10 @@ struct SettingsTextEditor: View {
 
             TextEditor(text: self.$text)
                 .font(.caption.monospaced())
-                .scrollContentBackground(.hidden)
-                .padding(6)
                 .frame(minHeight: self.minHeight)
-                .background(Color(nsColor: .textBackgroundColor))
-                .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
                 .overlay {
-                    RoundedRectangle(cornerRadius: 7, style: .continuous)
-                        .stroke(Color.secondary.opacity(0.28), lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
                 }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

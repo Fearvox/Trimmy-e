@@ -10,7 +10,6 @@ struct HotkeySettingsPane: View {
         SettingsPaneLayout {
             SettingsSection(
                 "Global shortcuts",
-                systemImage: "command",
                 subtitle: "These shortcuts work from any app. Click a recorder to assign a different key combination.")
             {
                 VStack(alignment: .leading, spacing: 16) {

@@ -17,7 +17,7 @@ Goal: ship a real macOS Settings window (⌘,) using only SwiftUI—no custom Ap
 - **Advanced**: clipboard compatibility, CLI installer, development tools.
 - **About**: version, links, license, and update controls.
 
-Use `SettingsPaneLayout`, `SettingsSection`, and `SettingsTextEditor` for new controls so spacing, scrolling, and editor treatment remain consistent.
+Use `SettingsPaneLayout`, `SettingsSection`, and `SettingsTextEditor` for new controls so spacing, scrolling, and editor treatment remain consistent. Keep sections flat and native; do not add custom card backgrounds.
 
 ## 1) Wire the Settings scene
 ```swift

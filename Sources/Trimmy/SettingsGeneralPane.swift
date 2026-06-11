@@ -14,7 +14,6 @@ struct GeneralSettingsPane: View {
 
             SettingsSection(
                 "Automatic trimming",
-                systemImage: "scissors",
                 subtitle: "The main clipboard watcher. Manual paste actions remain available when this is off.")
             {
                 PreferenceToggleRow(
@@ -25,7 +24,6 @@ struct GeneralSettingsPane: View {
 
             SettingsSection(
                 "Menu actions",
-                systemImage: "menubar.rectangle",
                 subtitle: "Choose which optional transformations appear in the Trimmy menu.")
             {
                 PreferenceToggleRow(
@@ -36,7 +34,6 @@ struct GeneralSettingsPane: View {
 
             SettingsSection(
                 "App",
-                systemImage: "app.badge",
                 subtitle: "Control how Trimmy starts and appears on your Mac.")
             {
                 VStack(alignment: .leading, spacing: 16) {

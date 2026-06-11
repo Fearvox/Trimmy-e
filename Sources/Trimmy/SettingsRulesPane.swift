@@ -8,7 +8,6 @@ struct RulesSettingsPane: View {
         SettingsPaneLayout {
             SettingsSection(
                 "Auto-trim exclusions",
-                systemImage: "hand.raised",
                 subtitle: "Skip automatic clipboard changes in selected apps or browser sites. "
                     + "Manual actions still work.")
             {
@@ -29,7 +28,6 @@ struct RulesSettingsPane: View {
 
             SettingsSection(
                 "URL query parameters",
-                systemImage: "link",
                 subtitle: "Control the menu action that removes tracking and other query parameters from copied links.")
             {
                 VStack(alignment: .leading, spacing: 14) {

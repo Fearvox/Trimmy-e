@@ -20,7 +20,6 @@ struct DebugSettingsPane: View {
         SettingsPaneLayout {
             SettingsSection(
                 "Preview tools",
-                systemImage: "hammer",
                 subtitle: "Development-only actions for testing menu previews and animation.")
             {
                 VStack(alignment: .leading, spacing: 12) {

@@ -9,7 +9,6 @@ struct TrimmingSettingsPane: View {
         SettingsPaneLayout {
             SettingsSection(
                 "Sensitivity",
-                systemImage: "gauge.with.dots.needle.67percent",
                 subtitle: "Set how readily Trimmy flattens command-shaped text in regular apps and terminals.")
             {
                 VStack(alignment: .leading, spacing: 14) {
@@ -52,7 +51,6 @@ struct TrimmingSettingsPane: View {
 
             SettingsSection(
                 "Cleanup",
-                systemImage: "wand.and.stars",
                 subtitle: "Fine-tune what Trimmy removes while preparing clipboard text.")
             {
                 VStack(alignment: .leading, spacing: 16) {
@@ -79,7 +77,6 @@ struct TrimmingSettingsPane: View {
 
             SettingsSection(
                 "Preview",
-                systemImage: "rectangle.split.2x1",
                 subtitle: "Manual “Paste Trimmed” always uses High; this preview follows the General apps level.")
             {
                 AggressivenessPreview(
@@ -114,6 +111,7 @@ struct AggressivenessPreview: View {
             ViewThatFits(in: .horizontal) {
                 HStack(alignment: .top, spacing: 12) {
                     PreviewCard(title: "Before", text: self.example.sample)
+                    Divider()
                     PreviewCard(
                         title: "After",
                         text: AggressivenessPreviewEngine.previewAfter(
@@ -125,6 +123,7 @@ struct AggressivenessPreview: View {
 
                 VStack(alignment: .leading, spacing: 8) {
                     PreviewCard(title: "Before", text: self.example.sample)
+                    Divider()
                     PreviewCard(
                         title: "After",
                         text: AggressivenessPreviewEngine.previewAfter(
@@ -276,13 +275,6 @@ private struct PreviewCard: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(nsColor: .textBackgroundColor))
-        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-        }
     }
 }

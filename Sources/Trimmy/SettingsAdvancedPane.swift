@@ -10,7 +10,6 @@ struct AdvancedSettingsPane: View {
         SettingsPaneLayout {
             SettingsSection(
                 "Clipboard compatibility",
-                systemImage: "doc.on.clipboard",
                 subtitle: "Optional compatibility behavior for apps that publish unusual clipboard formats.")
             {
                 PreferenceToggleRow(
@@ -21,7 +20,6 @@ struct AdvancedSettingsPane: View {
 
             SettingsSection(
                 "Command line",
-                systemImage: "terminal",
                 subtitle: "Install the bundled TrimmyCLI helper for scripts and shell pipelines.")
             {
                 self.cliInstallerSection
@@ -30,7 +28,6 @@ struct AdvancedSettingsPane: View {
             #if DEBUG
             SettingsSection(
                 "Developer",
-                systemImage: "hammer",
                 subtitle: "Development-only controls for local builds.")
             {
                 PreferenceToggleRow(
